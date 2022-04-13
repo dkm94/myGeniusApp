@@ -35,7 +35,7 @@ public class LyricsService extends Service {
 
     public static String API_KEY = "f4f2dd7e34msh23aed500d2c0c32p136655jsn243c1d3090e2";
     public static String protocol = "https://";
-    public static String URL = "genius.p.rapidapi.com";
+    public static String URL = "lyrics-search.p.rapidapi.com";
     public static String reqParam = "/search?q=";
 
     public static void searchLyrics(Context context, String searchValue, InterfaceAPIListener listener){

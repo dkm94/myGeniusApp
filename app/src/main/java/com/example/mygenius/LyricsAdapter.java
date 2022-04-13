@@ -42,12 +42,9 @@ public class LyricsAdapter extends BaseAdapter {
             view = LayoutInflater.from(context).inflate(R.layout.item_lyrics, viewGroup, false);
         }
         TextView artist = view.findViewById(R.id.textViewItemName);
-        artist.setText(lyrics.get(i).getName());
+        artist.setText(lyrics.get(i).getArtistName());
         TextView title = view.findViewById(R.id.textViewItemTitle);
         title.setText(lyrics.get(i).getTitle());
-
-        //ImageView imageView= view.findViewById(R.id.imageViewItemMusic);
-        //LyricsService.loadImage(context, musics.get(i).getImage(), imageView);
 
         //ImageView imageViewFav = view.findViewById(R.id.imageViewItemFavoris);
         //if(FavoriteRepository.getInstance(context).isFavorite(musics.get(i))){

@@ -7,18 +7,16 @@ import java.io.Serializable;
 
 public class Lyrics implements Serializable {
     private int id;
-    private String name;
+    private String artistName;
     private String title;
-    private String image;
     private String lyrics;
 
     public Lyrics(){}
 
-    public Lyrics(int id, String name, String title, String image, String lyrics){
+    public Lyrics(int id, String artistName, String title, String lyrics){
         this.id = id;
-        this.name = name;
+        this.artistName = artistName;
         this.title = title;
-        this.image = image;
         this.lyrics = lyrics;
     }
 
@@ -26,16 +24,14 @@ public class Lyrics implements Serializable {
         Lyrics temp = new Lyrics();
         try {
             temp.setId(object.getInt("id"));
-            temp.setName(object.getJSONObject("name").getString("artist_names"));
-            temp.setName(object.getJSONObject("title").getString("full_title"));
-            temp.setImage(object.getJSONObject("image").getString("song_art_image_thumbnail_url"));
-            temp.setLyrics(object.getJSONObject("lyrics").getString("url"));
+            temp.setArtistName(object.getString("type"));
+            temp.setTitle(object.getString("title"));
+            temp.setLyrics(object.getString("lyrics"));
         } catch (JSONException e){
             e.printStackTrace();
         }
         return temp;
     }
-
 
     public int getId() {
         return id;
@@ -45,12 +41,12 @@ public class Lyrics implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getArtistName() {
+        return artistName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
     }
 
     public String getTitle() {
@@ -61,14 +57,6 @@ public class Lyrics implements Serializable {
         this.title = title;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public String getLyrics() {
         return lyrics;
     }
@@ -76,5 +64,4 @@ public class Lyrics implements Serializable {
     public void setLyrics(String lyrics) {
         this.lyrics = lyrics;
     }
-
 }

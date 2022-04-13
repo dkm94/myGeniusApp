@@ -6,17 +6,20 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mygenius.Fragments.FragmentLogin;
+import com.example.mygenius.Fragments.FragmentLyrics;
 import com.example.mygenius.Fragments.FragmentRegister;
 import com.example.mygenius.Fragments.FragmentSearch;
 import com.example.mygenius.Interfaces.Login;
+import com.example.mygenius.Interfaces.LyricsSelected;
 import com.example.mygenius.Interfaces.Register;
 import com.example.mygenius.Interfaces.Search;
 
-public class MainActivity extends AppCompatActivity implements Login, Register, Search {
+public class MainActivity extends AppCompatActivity implements Login, Register, Search, LyricsSelected {
 
     FragmentLogin fragmentLogin;
     FragmentRegister fragmentRegister;
     FragmentSearch fragmentSearch;
+    FragmentLyrics fragmentLyrics;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements Login, Register, 
         fragmentRegister= new FragmentRegister();
         fragmentRegister.setListenerLogin(this);
         fragmentSearch= new FragmentSearch();
+        fragmentSearch.setListenerLyricsSelected(this);
+        fragmentLyrics= new FragmentLyrics();
 
 
         getSupportFragmentManager().beginTransaction()
@@ -63,5 +68,25 @@ public class MainActivity extends AppCompatActivity implements Login, Register, 
                 .hide(fragmentLogin)
                 .show(fragmentSearch)
                 .commit();
+    }
+
+    @Override
+    public void onSelectLyrics(Lyrics lyrics) {
+        getSupportFragmentManager().beginTransaction()
+                .hide(fragmentSearch)
+                .show(fragmentLyrics)
+                .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(fragmentLyrics.isVisible()) {
+            getSupportFragmentManager().beginTransaction()
+                    .hide(fragmentLyrics)
+                    .show(fragmentSearch)
+                    .commit();
+        }else{
+            super.onBackPressed();
+        }
     }
 }
