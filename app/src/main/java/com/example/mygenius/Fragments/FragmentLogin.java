@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.mygenius.Helper;
 import com.example.mygenius.Interfaces.Register;
+import com.example.mygenius.Interfaces.Search;
 import com.example.mygenius.R;
 
 public class FragmentLogin extends Fragment implements View.OnClickListener{
@@ -25,9 +26,14 @@ public class FragmentLogin extends Fragment implements View.OnClickListener{
     Button btnLogin, btnRegister;
     Helper helper;
     Register listenerRegister;
+    Search listenerSearch;
 
     public void setListenerRegister(Register listenerRegister){
         this.listenerRegister = listenerRegister;
+    }
+
+    public void setListenerSearch(Search listenerSearch){
+        this.listenerSearch = listenerSearch;
     }
 
     @Override
@@ -37,7 +43,9 @@ public class FragmentLogin extends Fragment implements View.OnClickListener{
         email= v.findViewById(R.id.email1);
         password= v.findViewById(R.id.password1);
         btnLogin = v.findViewById(R.id.signIn1);
+        btnLogin.setOnClickListener(this);
         btnRegister = v.findViewById(R.id.goToSignUp);
+        btnRegister.setOnClickListener(this);
         helper = new Helper(getContext());
 
         return v;
@@ -55,12 +63,13 @@ public class FragmentLogin extends Fragment implements View.OnClickListener{
                 Boolean checkEmailPassword = helper.checkEmailPassword(emailValue, passwordValue);
                 if(checkEmailPassword){
                     Toast.makeText(getContext(), "Connexion réussie !", Toast.LENGTH_LONG).show();
+                    listenerSearch.search();
                 } else {
                     Toast.makeText(getContext(), "La connexion a échoué. Veuillez réessayer.", Toast.LENGTH_LONG).show();
                 }
             }
-        } else {
+        } else if(view.equals(btnRegister)){
             listenerRegister.register();
-        }
+        } else return ;
     }
 }

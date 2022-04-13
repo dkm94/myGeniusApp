@@ -27,7 +27,7 @@ public class FragmentRegister extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_login, null);
+        View v = inflater.inflate(R.layout.fragment_register, null);
 
         username = v.findViewById(R.id.username);
         email = v.findViewById(R.id.email);
@@ -59,8 +59,7 @@ public class FragmentRegister extends Fragment implements View.OnClickListener {
                         Boolean insert = helper.insertData(usernameValue, emailValue, passwordValue);
                         if(insert){
                             Toast.makeText(getContext(), "Le compte a été créé avec succès, vous pouvez à présent vous connecter", Toast.LENGTH_SHORT).show();
-//                            Intent intent = new Intent(getContext(), LoginActivity.class);
-//                            startActivity(intent);
+                            listenerLogin.login();
                         } else {
                             Toast.makeText(getContext(), "Erreur connexion. Veuillez réessayer.", Toast.LENGTH_LONG).show();
                         }
@@ -71,9 +70,9 @@ public class FragmentRegister extends Fragment implements View.OnClickListener {
                     Toast.makeText(getContext(), "La confirmation doit correspondre au mot de passe. Veuillez réessayer.", Toast.LENGTH_SHORT).show();
             }
 
-        } else {
+        } else if(view.equals(signIn)){
             listenerLogin.login();
-        }
+        } else return ;
 
 }
 }
