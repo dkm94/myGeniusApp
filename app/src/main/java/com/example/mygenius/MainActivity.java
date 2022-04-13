@@ -40,8 +40,10 @@ public class MainActivity extends AppCompatActivity implements Login, Register, 
                 .add(R.id.frameLayout, fragmentLogin)
                 .add(R.id.frameLayout, fragmentRegister)
                 .add(R.id.frameLayout, fragmentSearch)
+                .add(R.id.frameLayout, fragmentLyrics)
                 .hide(fragmentLogin)
                 .hide(fragmentSearch)
+                .hide(fragmentLyrics)
                 .commit();
     }
 
@@ -72,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements Login, Register, 
 
     @Override
     public void onSelectLyrics(Lyrics lyrics) {
+        fragmentLyrics.setCurrentLyrics(lyrics);
         getSupportFragmentManager().beginTransaction()
                 .hide(fragmentSearch)
                 .show(fragmentLyrics)
