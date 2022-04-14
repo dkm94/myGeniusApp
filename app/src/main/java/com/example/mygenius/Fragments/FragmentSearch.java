@@ -47,8 +47,8 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Ap
         listViewLyrics= v.findViewById(R.id.listViewLyrics);
         lyricsList= new ArrayList<Lyrics>();
 
-        lyricsList.add(new Lyrics(23222, "ABBA", "Mamamia", "Blablabla"));
-        lyricsList.add(new Lyrics(23342, "Queen", "Another one bites the dust", "Blablabla Blablabla Blablabla BlablablaBlablabla"));
+        //lyricsList.add(new Lyrics(23222, "ABBA", "Mamamia", "Blablabla"));
+        //lyricsList.add(new Lyrics(23342, "Queen", "Another one bites the dust", "Blablabla Blablabla Blablabla BlablablaBlablabla"));
 
         adapter = new LyricsAdapter(getContext(), lyricsList);
         listViewLyrics.setAdapter(adapter);
@@ -63,11 +63,15 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Ap
     }
 
     @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Lyrics lyrics = lyricsList.get(i);
+        listenerLyricsSelected.onSelectLyrics(lyrics);
+    }
+
+    @Override
     public void onClick(View view) {
         LyricsService.searchLyrics(getContext(), searchInput.getText().toString(), this);
     }
-
-
 
     @Override
     public void onReceiveLyrics(ArrayList<Lyrics> lyrics) {
@@ -76,9 +80,4 @@ public class FragmentSearch extends Fragment implements View.OnClickListener, Ap
         listViewLyrics.setAdapter(adapter);
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Lyrics lyrics = lyricsList.get(i);
-        listenerLyricsSelected.onSelectLyrics(lyrics);
-    }
 }

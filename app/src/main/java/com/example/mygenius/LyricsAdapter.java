@@ -33,7 +33,7 @@ public class LyricsAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int i) {
-        return lyrics.get(i).getId();
+        return i;
     }
 
     @Override

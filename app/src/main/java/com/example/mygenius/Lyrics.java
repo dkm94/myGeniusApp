@@ -23,7 +23,7 @@ public class Lyrics implements Serializable {
     public static Lyrics jsonToLyrics(JSONObject object){
         Lyrics temp = new Lyrics();
         try {
-            temp.setId(object.getInt("id"));
+            //temp.setId(object.getInt("id"));
             temp.setArtistName(object.getString("type"));
             temp.setTitle(object.getString("title"));
             temp.setLyrics(object.getString("lyrics"));
