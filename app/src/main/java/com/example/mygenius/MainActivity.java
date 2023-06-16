@@ -1,80 +1,95 @@
 package com.example.mygenius;
 
+import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import com.example.mygenius.Fragments.FragmentLogin;
+import com.example.mygenius.Fragments.FragmentLyrics;
+import com.example.mygenius.Fragments.FragmentRegister;
+import com.example.mygenius.Fragments.FragmentSearch;
+import com.example.mygenius.Interfaces.Login;
+import com.example.mygenius.Interfaces.LyricsSelected;
+import com.example.mygenius.Interfaces.Register;
+import com.example.mygenius.Interfaces.Search;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Login, Register, Search, LyricsSelected {
 
-    //FragmentLogin fragmentLogin;
-    //FragmentRegister fragmentRegister;
-    //FragmentSearch fragmentSearch;
-    //FragmentFarovite fragmentFavorite;
-    //FragmentLyrics fragmentLyrics;
-
-    EditText username, email, password, confirmPassword;
-    Button signUp, signIn;
-    Helper helper;
+    FragmentLogin fragmentLogin;
+    FragmentRegister fragmentRegister;
+    FragmentSearch fragmentSearch;
+    FragmentLyrics fragmentLyrics;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        username = (EditText) findViewById(R.id.username);
-        email = (EditText) findViewById(R.id.email);
-        password = (EditText) findViewById(R.id.password);
-        confirmPassword = (EditText) findViewById(R.id.confirmPassword);
-        signUp = (Button) findViewById(R.id.signUp);
-        signIn = (Button) findViewById(R.id.goToSignIn);
-        helper = new Helper(this);
+        fragmentLogin= new FragmentLogin();
+        fragmentLogin.setListenerRegister(this);
+        fragmentLogin.setListenerSearch(this);
+        fragmentRegister= new FragmentRegister();
+        fragmentRegister.setListenerLogin(this);
+        fragmentSearch= new FragmentSearch();
+        fragmentSearch.setListenerLyricsSelected(this);
+        fragmentLyrics= new FragmentLyrics();
 
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String usernameValue = username.getText().toString();
-                String emailValue = email.getText().toString();
-                String passwordValue = password.getText().toString();
-                String confirmPasswordValue = confirmPassword.getText().toString();
 
-                if(usernameValue.equals("") || emailValue.equals("") || passwordValue.equals("") || confirmPasswordValue.equals("")){
-                    Toast.makeText(MainActivity.this, "Veuillez remplir tous les champs.", Toast.LENGTH_LONG).show();
-                } else {
-                    if(passwordValue.equals(confirmPasswordValue)){
-                        Boolean checkEmailValue = helper.checkEmail(emailValue);
-                        if(checkEmailValue==false){
-                            Boolean insert = helper.insertData(usernameValue, emailValue, passwordValue);
-                            if(insert==true){
-                                Toast.makeText(MainActivity.this, "Le compte a été créé avec succès, vous pouvez à présent vous connecter", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                startActivity(intent);
-                            } else {
-                                Toast.makeText(MainActivity.this, "Erreur connexion. Veuillez réessayer.", Toast.LENGTH_LONG).show();
-                            }
-                        } else {
-                        Toast.makeText(MainActivity.this, "L'utilisateur existe déjà. Veuillez choisir une autre adresse mail.", Toast.LENGTH_SHORT).show();
-                        }
-                    } else
-                    Toast.makeText(MainActivity.this, "La confirmation doit correspondre au mot de passe. Veuillez réessayer.", Toast.LENGTH_SHORT).show();
-                }
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.frameLayout, fragmentLogin)
+                .add(R.id.frameLayout, fragmentRegister)
+                .add(R.id.frameLayout, fragmentSearch)
+                .add(R.id.frameLayout, fragmentLyrics)
+                .hide(fragmentLogin)
+                .hide(fragmentSearch)
+                .hide(fragmentLyrics)
+                .commit();
+    }
 
-            }
-        });
+    @Override
+    public void login() {
+        getSupportFragmentManager().beginTransaction()
+                .hide(fragmentRegister)
+                .show(fragmentLogin)
+                .commit();
+    }
 
-        signIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-
+    @Override
+    public void register() {
+        getSupportFragmentManager().beginTransaction()
+                .hide(fragmentLogin)
+                .show(fragmentRegister)
+                .commit();
     }
 
 
+    @Override
+    public void search() {
+        getSupportFragmentManager().beginTransaction()
+                .hide(fragmentLogin)
+                .show(fragmentSearch)
+                .commit();
+    }
+
+    @Override
+    public void onSelectLyrics(Lyrics lyrics) {
+        fragmentLyrics.setCurrentLyrics(lyrics);
+        getSupportFragmentManager().beginTransaction()
+                .hide(fragmentSearch)
+                .show(fragmentLyrics)
+                .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(fragmentLyrics.isVisible()) {
+            getSupportFragmentManager().beginTransaction()
+                    .hide(fragmentLyrics)
+                    .show(fragmentSearch)
+                    .commit();
+        }else{
+            super.onBackPressed();
+        }
+    }
 }
