@@ -1,5 +1,5 @@
 <div align="center">
-    <h4><b>Art gallery</b></h4>
+    <h4><b>MyGenius App</b></h4>
     <h4>
         <a href="#about">About the project</a>
         •
