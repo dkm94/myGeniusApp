@@ -28,11 +28,11 @@
 
 ## Visuals
 
-<p align="center"> 
-    <img />
-    <img />
-    <img />
-    <img />
+<p> 
+    <img src="Home.png" alt="home" height="300" width="auto" />
+    <img src="Lyrics.png" alt="lyrics" height="300" width="auto" />
+    <img src="Search.png" alt="search" height="300" width="auto" />
+    <img src="Favorites.png" alt="favorites" height="300" width="auto" />
 </p>
 
 ## Built with
