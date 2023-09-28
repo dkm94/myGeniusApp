@@ -1,7 +1,7 @@
 <div align="center">
-    <h4><b>MyGenius App</b></h4>
+    <h1><b>MyGenius App</b></h1>
     <h4>
-        <a href="#about">About the project</a>
+        <a href="#about-the-project">About the project</a>
         •
         <a href="#visuals">Visuals</a>
         •
